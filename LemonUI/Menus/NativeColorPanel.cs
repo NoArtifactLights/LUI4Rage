@@ -10,6 +10,11 @@ using GTA.UI;
 #elif FIVEM
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
+#elif RAGE
+using Rage;
+using Rage.Native;
+using LemonUI.Rage;
+using Control = Rage.GameControl;
 #endif
 
 namespace LemonUI.Menus

@@ -4,6 +4,8 @@ using CitizenFX.Core;
 using GTA.Native;
 #elif SHVDN3
 using GTA;
+#elif RAGE
+using Rage;
 #endif
 using System;
 
@@ -116,13 +118,17 @@ namespace LemonUI.Scaleform
 
         #endregion
 
-        #region Constructors
+#region Constructors
 
-        /// <summary>
-        /// Creates a standard customizable message with just a title.
-        /// </summary>
-        /// <param name="title">The title to use.</param>
+/// <summary>
+/// Creates a standard customizable message with just a title.
+/// </summary>
+/// <param name="title">The title to use.</param>
+#if RAGE
+        public BigMessage(string title) : this(title, "", "", (WeaponHash)2725352035u, 0, 0, MessageType.Customizable)
+#else
         public BigMessage(string title) : this(title, "", "", WeaponHash.Unarmed, 0, 0, MessageType.Customizable)
+#endif
         {
         }
 
@@ -131,7 +137,13 @@ namespace LemonUI.Scaleform
         /// </summary>
         /// <param name="title">The title to use.</param>
         /// <param name="type">The type of message.</param>
-        public BigMessage(string title, MessageType type) : this(title, "", "", WeaponHash.Unarmed, 0, 0, type)
+        public BigMessage(string title, MessageType type) : this(title, "", "",
+#if RAGE
+            (WeaponHash)2725352035u,
+#else
+            WeaponHash.Unarmed,
+#endif
+            0, 0, type)
         {
         }
 
@@ -140,7 +152,13 @@ namespace LemonUI.Scaleform
         /// </summary>
         /// <param name="title">The title to use.</param>
         /// <param name="message">The message to show.</param>
-        public BigMessage(string title, string message) : this(title, message, "", WeaponHash.Unarmed, 0, 0, MessageType.Customizable)
+        public BigMessage(string title, string message) : this(title, message, "",
+#if RAGE
+            (WeaponHash)2725352035u
+#else
+            WeaponHash.Unarmed
+#endif
+            , 0, 0, MessageType.Customizable)
         {
         }
 
@@ -150,7 +168,13 @@ namespace LemonUI.Scaleform
         /// <param name="title">The title to use.</param>
         /// <param name="message">The message to show.</param>
         /// <param name="rank">Text to show in the Rank space.</param>
-        public BigMessage(string title, string message, string rank) : this(title, message, rank, WeaponHash.Unarmed, 0, 0, MessageType.CopsAndCrooks)
+        public BigMessage(string title, string message, string rank) : this(title, message, rank,
+#if RAGE
+            (WeaponHash)2725352035u
+#else
+            WeaponHash.Unarmed
+#endif
+            , 0, 0, MessageType.CopsAndCrooks)
         {
         }
 
@@ -160,7 +184,13 @@ namespace LemonUI.Scaleform
         /// <param name="title">The title to use.</param>
         /// <param name="message">The message to show.</param>
         /// <param name="type">The type of message.</param>
-        public BigMessage(string title, string message, MessageType type) : this(title, message, "", WeaponHash.Unarmed, 0, 0, type)
+        public BigMessage(string title, string message, MessageType type) : this(title, message, "",
+#if RAGE
+            (WeaponHash)2725352035u
+#else
+            WeaponHash.Unarmed
+#endif
+            , 0, 0, type)
         {
         }
 
@@ -169,7 +199,13 @@ namespace LemonUI.Scaleform
         /// </summary>
         /// <param name="title">The title to use.</param>
         /// <param name="colorText">The color of the text.</param>
-        public BigMessage(string title, int colorText) : this(title, "", "", WeaponHash.Unarmed, colorText, 0, MessageType.Customizable)
+        public BigMessage(string title, int colorText) : this(title, "", "",
+#if RAGE
+            (WeaponHash)2725352035u
+#else
+            WeaponHash.Unarmed
+#endif
+            , colorText, 0, MessageType.Customizable)
         {
         }
 
@@ -179,7 +215,13 @@ namespace LemonUI.Scaleform
         /// <param name="title">The title to use.</param>
         /// <param name="colorText">The color of the text.</param>
         /// <param name="colorBackground">The color of the background.</param>
-        public BigMessage(string title, int colorText, int colorBackground) : this(title, "", "", WeaponHash.Unarmed, colorText, colorBackground, MessageType.Customizable)
+        public BigMessage(string title, int colorText, int colorBackground) : this(title, "", "",
+#if RAGE
+            (WeaponHash)2725352035u
+#else
+            WeaponHash.Unarmed
+#endif
+            , colorText, colorBackground, MessageType.Customizable)
         {
         }
 
@@ -226,9 +268,9 @@ namespace LemonUI.Scaleform
             Update();
         }
 
-        #endregion
+#endregion
 
-        #region Public Functions
+#region Public Functions
 
         /// <summary>
         /// Updates the Message information in the Scaleform.
@@ -285,6 +327,6 @@ namespace LemonUI.Scaleform
             }
         }
 
-        #endregion
+#endregion
     }
 }

@@ -1,7 +1,11 @@
 #if FIVEM
 using CitizenFX.Core.Native;
-#else
+#elif SHVDN2 || SHVDN3
 using GTA.Native;
+#else
+using System;
+using System.Runtime.InteropServices.ComTypes;
+using Rage.Native;
 #endif
 
 namespace LemonUI.Scaleform
@@ -18,8 +22,10 @@ namespace LemonUI.Scaleform
         /// </summary>
 #if FIVEM
         protected CitizenFX.Core.Scaleform scaleform = null;
-#else
+#elif SHVDN2 || SHVDN3
         protected GTA.Scaleform scaleform = null;
+#elif RAGE
+        protected RageScaleform scaleform = null;
 #endif
 
         #endregion
@@ -43,8 +49,10 @@ namespace LemonUI.Scaleform
         {
 #if FIVEM
             scaleform = new CitizenFX.Core.Scaleform(sc);
-#else
+#elif SHVDN2 || SHVDN3
             scaleform = new GTA.Scaleform(sc);
+#elif RAGE
+            scaleform = new RageScaleform(sc);
 #endif
         }
 
@@ -68,8 +76,10 @@ namespace LemonUI.Scaleform
             Update();
 #if FIVEM
             API.DrawScaleformMovieFullscreen(scaleform.Handle, 255, 255, 255, 255, 0);
-#else
+#elif SHVDN2 || SHVDN3
             Function.Call(Hash.DRAW_SCALEFORM_MOVIE_FULLSCREEN, scaleform.Handle, 255, 255, 255, 255, 0);
+#elif RAGE
+            NativeFunction.Natives.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform.Handle, 255, 255, 255, 255, 0);
 #endif
         }
         /// <summary>
@@ -85,14 +95,20 @@ namespace LemonUI.Scaleform
         /// </summary>
         public void Dispose()
         {
+#if RAGE
+            int id = (int)scaleform.Handle.Value;
+#else
             int id = scaleform.Handle;
+#endif
 #if FIVEM
             API.SetScaleformMovieAsNoLongerNeeded(ref id);
-#else
+#elif SHVDN2 || SHVDN3
             Function.Call(Hash.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED, new OutputArgument(id));
+#elif RAGE
+            NativeFunction.Natives.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ref id);
 #endif
         }
 
-        #endregion
+#endregion
     }
 }

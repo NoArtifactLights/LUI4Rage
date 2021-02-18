@@ -1,9 +1,12 @@
 #if FIVEM
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
-#else
+#elif SHVDN2 || SHVDN3
 using GTA;
 using GTA.Native;
+#elif RAGE
+using Rage;
+using Rage.Native;
 #endif
 using System;
 using System.Collections.Generic;
@@ -16,13 +19,16 @@ namespace LemonUI.Scaleform
     public struct InstructionalButton
     {
         #region Private Fields
-
+#if RAGE
+        private GameControl control;
+#else
         private Control control;
+#endif
         private string raw;
 
-        #endregion
+#endregion
 
-        #region Public Properties
+#region Public Properties
 
         /// <summary>
         /// The description of this button.
@@ -31,7 +37,13 @@ namespace LemonUI.Scaleform
         /// <summary>
         /// The Control used by this button.
         /// </summary>
-        public Control Control
+        public
+#if RAGE
+            GameControl
+#else
+            Control 
+#endif
+            Control
         {
             get => control;
             set
@@ -43,6 +55,8 @@ namespace LemonUI.Scaleform
                 raw = Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)value, 1);
 #elif SHVDN3
                 raw = Function.Call<string>(Hash.GET_CONTROL_INSTRUCTIONAL_BUTTON, 2, (int)value, 1);
+#elif RAGE
+                raw = NativeFunction.Natives.GET_CONTROL_INSTRUCTIONAL_BUTTON<string>(2, (int)value, 1);
 #endif
             }
         }
@@ -55,20 +69,30 @@ namespace LemonUI.Scaleform
             set
             {
                 raw = value;
+#if RAGE
+                control = (GameControl)(-1);
+#else
                 control = (Control)(-1);
+#endif
             }
         }
 
-        #endregion
+#endregion
 
-        #region Constructor
+#region Constructor
 
         /// <summary>
         /// Creates an instructional button for a Control.
         /// </summary>
         /// <param name="description">The text for the description.</param>
         /// <param name="control">The control to use.</param>
-        public InstructionalButton(string description, Control control)
+        public InstructionalButton(string description,
+#if RAGE
+            GameControl
+#else
+            Control 
+#endif
+            control)
         {
             Description = description;
             this.control = control;
@@ -78,6 +102,8 @@ namespace LemonUI.Scaleform
             raw = Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)control, 1);
 #elif SHVDN3
             raw = Function.Call<string>(Hash.GET_CONTROL_INSTRUCTIONAL_BUTTON, 2, (int)control, 1);
+#elif RAGE
+            raw = NativeFunction.Natives.GET_CONTROL_INSTRUCTIONAL_BUTTON<string>(2, (int)control, 1);
 #endif
         }
 
@@ -89,11 +115,15 @@ namespace LemonUI.Scaleform
         public InstructionalButton(string description, string raw)
         {
             Description = description;
+#if RAGE
+            control = (GameControl)(-1);
+#else
             control = (Control)(-1);
+#endif
             this.raw = raw;
         }
 
-        #endregion
+#endregion
     }
 
     /// <summary>
@@ -101,16 +131,16 @@ namespace LemonUI.Scaleform
     /// </summary>
     public class InstructionalButtons : BaseScaleform
     {
-        #region Public Fields
+#region Public Fields
 
         /// <summary>
         /// The buttons used in this Scaleform.
         /// </summary>
         private readonly List<InstructionalButton> buttons = new List<InstructionalButton>();
 
-        #endregion
+#endregion
 
-        #region Constructors
+#region Constructors
 
         /// <summary>
         /// Creates a new set of Instructional Buttons.
@@ -121,9 +151,9 @@ namespace LemonUI.Scaleform
             this.buttons.AddRange(buttons);
         }
 
-        #endregion
+#endregion
 
-        #region Public Functions
+#region Public Functions
 
         /// <summary>
         /// Adds an Instructional Button.
@@ -182,6 +212,6 @@ namespace LemonUI.Scaleform
             scaleform.CallFunction("DRAW_INSTRUCTIONAL_BUTTONS", -1);
         }
 
-        #endregion
+#endregion
     }
 }

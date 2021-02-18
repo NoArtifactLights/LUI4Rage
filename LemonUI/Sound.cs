@@ -7,6 +7,8 @@ using GTA.Native;
 #elif SHVDN3
 using GTA;
 using GTA.Native;
+#elif RAGE
+using Rage.Native;
 #endif
 
 namespace LemonUI
@@ -45,10 +47,14 @@ namespace LemonUI
             API.PlaySoundFrontend(-1, File, Set, false);
             int id = API.GetSoundId();
             API.ReleaseSoundId(id);
-#else
+#elif SHVDN2 || SHVDN3
             Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, File, Set, false);
             int id = Function.Call<int>(Hash.GET_SOUND_ID);
             Function.Call(Hash.RELEASE_SOUND_ID, id);
+#elif RAGE
+            NativeFunction.Natives.PLAY_SOUND_FRONTEND(-1, File, Set, false);
+            int id = NativeFunction.Natives.GET_SOUND_ID<int>();
+            NativeFunction.Natives.RELEASE_SOUND_ID(id);
 #endif
         }
     }

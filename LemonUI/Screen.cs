@@ -1,9 +1,12 @@
 #if FIVEM
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
-#else
+#elif SHVDN2 || SHVDN3
 using GTA;
 using GTA.Native;
+#elif RAGE
+using Rage;
+using Rage.Native;
 #endif
 using LemonUI.Extensions;
 using System.Drawing;
@@ -15,7 +18,7 @@ namespace LemonUI
     /// </summary>
     public enum GFXAlignment
     {
-        /// <summary>
+        /// <summary>f
         /// Vertical Alignment to the Bottom.
         /// </summary>
         Bottom = 66,
@@ -55,6 +58,8 @@ namespace LemonUI
                 return Function.Call<float>(Hash._0xF1307EF624A80D87, false);
 #elif SHVDN3
                 return Function.Call<float>(Hash._GET_ASPECT_RATIO, false);
+#elif RAGE
+                return NativeFunction.Natives._GET_ASPECT_RATIO<float>(false);
 #endif
             }
         }
@@ -119,6 +124,9 @@ namespace LemonUI
 #elif SHVDN2 || SHVDN3
             float cursorX = Function.Call<float>(Hash.GET_CONTROL_NORMAL, 0, (int)Control.CursorX);
             float cursorY = Function.Call<float>(Hash.GET_CONTROL_NORMAL, 0, (int)Control.CursorY);
+#elif RAGE
+            float cursorX = NativeFunction.Natives.GET_CONTROL_NORMAL<float>(0, (int)GameControl.CursorX);
+            float cursorY = NativeFunction.Natives.GET_CONTROL_NORMAL<float>(0, (int)GameControl.CursorY);
 #endif
             // Convert the search area values to relative
             ToRelative(width, height, out float realWidth, out float realHeight);
@@ -150,12 +158,14 @@ namespace LemonUI
             float realX = 0, realY = 0;
 #if FIVEM
             API.GetScriptGfxPosition(relativeX, relativeY, ref realX, ref realY);
-#else
+#elif SHVDN2 || SHVDN3
             OutputArgument argX = new OutputArgument();
             OutputArgument argY = new OutputArgument();
             Function.Call((Hash)0x6DD8F5AA635EB4B2, relativeX, relativeY, argX, argY); // _GET_SCRIPT_GFX_POSITION
             realX = argX.GetResult<float>();
             realY = argY.GetResult<float>();
+#elif RAGE
+            NativeFunction.Natives.x6DD8F5AA635EB4B2(relativeX, relativeY, out realX, out realY);
 #endif
             // And return it converted to absolute
             ToAbsolute(realX, realY, out float absoluteX, out float absoluteY);

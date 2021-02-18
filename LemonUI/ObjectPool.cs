@@ -8,6 +8,9 @@ using GTA.Native;
 #elif SHVDN3
 using GTA.Native;
 using GTA.UI;
+#elif RAGE
+using Rage;
+using Rage.Native;
 #endif
 using System;
 using System.Collections.Generic;
@@ -85,14 +88,18 @@ namespace LemonUI
         private SizeF lastKnownResolution = Game.ScreenResolution;
 #elif SHVDN3
         private SizeF lastKnownResolution = GTA.UI.Screen.Resolution;
+#elif RAGE
+        private SizeF lastKnownResolution = Game.Resolution;
 #endif
         /// <summary>
         /// The last know Safezone size.
         /// </summary>
 #if FIVEM
         private float lastKnownSafezone = API.GetSafeZoneSize();
-#else
+#elif SHVDN2 || SHVDN3
         private float lastKnownSafezone = Function.Call<float>(Hash.GET_SAFE_ZONE_SIZE);
+#elif RAGE
+        private float lastKnownSafezone = NativeFunction.Natives.GET_SAFE_ZONE_SIZE<float>();
 #endif
         /// <summary>
         /// The list of processable objects.
@@ -153,6 +160,8 @@ namespace LemonUI
             SizeF resolution = Game.ScreenResolution;
 #elif SHVDN3
             SizeF resolution = GTA.UI.Screen.Resolution;
+#elif RAGE
+            SizeF resolution = Game.Resolution;
 #endif
             // If the old res does not matches the current one
             if (lastKnownResolution != resolution)
@@ -173,8 +182,10 @@ namespace LemonUI
             // Get the current Safezone size
 #if FIVEM
             float safezone = API.GetSafeZoneSize();
-#else
+#elif SHVDN2 || SHVDN3
             float safezone = Function.Call<float>(Hash.GET_SAFE_ZONE_SIZE);
+#elif RAGE
+            float safezone = NativeFunction.Natives.GET_SAFE_ZONE_SIZE<float>();
 #endif
 
             // If is not the same as the last one

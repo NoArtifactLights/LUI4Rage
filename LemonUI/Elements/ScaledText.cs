@@ -10,6 +10,11 @@ using Font = GTA.Font;
 using GTA.UI;
 using GTA.Native;
 using Font = GTA.UI.Font;
+#elif RAGE
+using Rage;
+using Rage.Native;
+using LemonUI.Rage;
+using Font = LemonUI.Rage.Font;
 #endif
 using System;
 using System.Collections.Generic;
@@ -158,6 +163,10 @@ namespace LemonUI.Elements
                 Function.Call(Hash._BEGIN_TEXT_COMMAND_GET_WIDTH, "CELL_EMAIL_BCON");
                 Add();
                 return Function.Call<float>(Hash._END_TEXT_COMMAND_GET_WIDTH, true) * 1f.ToXAbsolute();
+#elif RAGE
+                NativeFunction.Natives._BEGIN_TEXT_COMMAND_GET_WIDTH("CELL_EMAIL_BCON");
+                Add();
+                return NativeFunction.Natives._END_TEXT_COMMAND_GET_WIDTH<float>(true) * 1f.ToXAbsolute();
 #endif
             }
         }
@@ -175,6 +184,8 @@ namespace LemonUI.Elements
                 Function.Call(Hash._SET_TEXT_GXT_ENTRY, "CELL_EMAIL_BCON");
 #elif SHVDN3
                 Function.Call(Hash._BEGIN_TEXT_COMMAND_LINE_COUNT, "CELL_EMAIL_BCON");
+#elif RAGE
+                NativeFunction.Natives._BEGIN_TEXT_COMMAND_LINE_COUNT("CELL_EMAIL_BCON");
 #endif
                 // Add the information of this text
                 Add();
@@ -185,6 +196,8 @@ namespace LemonUI.Elements
                 return Function.Call<int>(Hash._0x9040DFB09BE75706, relativePosition.X, relativePosition.Y);
 #elif SHVDN3
                 return Function.Call<int>(Hash._END_TEXT_COMMAND_LINE_COUNT, relativePosition.X, relativePosition.Y);
+#elif RAGE
+                return NativeFunction.Natives._END_TEXT_COMMAND_LINE_COUNT<int>(relativePosition.X, relativePosition.Y);
 #endif
             }
         }
@@ -202,6 +215,8 @@ namespace LemonUI.Elements
                 return 1080 * Function.Call<float>(Hash._0xDB88A37483346780, Scale, (int)Font);
 #elif SHVDN3
                 return 1080 * Function.Call<float>(Hash._GET_TEXT_SCALE_HEIGHT, Scale, (int)Font);
+#elif RAGE
+                return 1080 * NativeFunction.Natives._GET_TEXT_SCALE_HEIGHT<float>(Scale, (int)Font);
 #endif
             }
         }
@@ -293,7 +308,7 @@ namespace LemonUI.Elements
             {
                 API.SetTextWrap(0f, relativePosition.X);
             }
-#else
+#elif SHVDN2 || SHVDN3
             foreach (string chunk in chunks)
             {
                 Function.Call((Hash)0x6C188BE134E074AA, chunk); // _ADD_TEXT_COMPONENT_STRING on v2, ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME on v3
@@ -328,6 +343,42 @@ namespace LemonUI.Elements
             else if (Alignment == Alignment.Right)
             {
                 Function.Call(Hash.SET_TEXT_WRAP, 0f, relativePosition.X);
+            }
+#elif RAGE
+            foreach (string chunk in chunks)
+            {
+                NativeFunction.Natives.x6C188BE134E074AA(chunk); // _ADD_TEXT_COMPONENT_STRING on v2, ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME on v3
+            }
+            NativeFunction.Natives.SET_TEXT_FONT((int)Font);
+            NativeFunction.Natives.SET_TEXT_SCALE(1f, Scale);
+            NativeFunction.Natives.SET_TEXT_COLOUR(Color.R, Color.G, Color.B, Color.A);
+            NativeFunction.Natives.SET_TEXT_JUSTIFICATION((int)Alignment);
+            if (Shadow)
+            {
+                NativeFunction.Natives.SET_TEXT_DROP_SHADOW();
+            }
+            if (Outline)
+            {
+                NativeFunction.Natives.SET_TEXT_OUTLINE();
+            }
+            if (WordWrap > 0)
+            {
+                switch (Alignment)
+                {
+                    case Alignment.Center:
+                        NativeFunction.Natives.SET_TEXT_WRAP(relativePosition.X - (realWrap * 0.5f), relativePosition.X + (realWrap * 0.5f));
+                        break;
+                    case Alignment.Left:
+                        NativeFunction.Natives.SET_TEXT_WRAP(relativePosition.X, relativePosition.X + realWrap);
+                        break;
+                    case Alignment.Right:
+                        NativeFunction.Natives.SET_TEXT_WRAP(relativePosition.X - realWrap, relativePosition.X);
+                        break;
+                }
+            }
+            else if (Alignment == Alignment.Right)
+            {
+                NativeFunction.Natives.SET_TEXT_WRAP(0f, relativePosition.X);
             }
 #endif
         }
@@ -404,10 +455,14 @@ namespace LemonUI.Elements
             API.SetTextEntry("CELL_EMAIL_BCON");
             Add();
             API.DrawText(relativePosition.X, relativePosition.Y);
-#else
+#elif SHVDN2 || SHVDN3
             Function.Call((Hash)0x25FBB336DF1804CB, "CELL_EMAIL_BCON"); // _SET_TEXT_ENTRY on v2, BEGIN_TEXT_COMMAND_DISPLAY_TEXT on v3
             Add();
             Function.Call((Hash)0xCD015E5BB0D96A57, relativePosition.X, relativePosition.Y); // _DRAW_TEXT on v2, END_TEXT_COMMAND_DISPLAY_TEXT on v3
+#elif RAGE
+            NativeFunction.Natives.x25FBB336DF1804CB("CELL_EMAIL_BCON");
+            Add();
+            NativeFunction.Natives.xCD015E5BB0D96A57(relativePosition.X, relativePosition.Y);
 #endif
         }
 

@@ -1,7 +1,10 @@
 ﻿#if FIVEM
 using CitizenFX.Core.Native;
-#else
+#elif SHVDN2 || SHVDN3
 using GTA.Native;
+#elif RAGE
+using Rage;
+using Rage.Native;
 #endif
 using System.Drawing;
 
@@ -53,6 +56,12 @@ namespace LemonUI.Elements
 
         #region Private Functions
 
+#if RAGE
+        public void Load() => Request();
+
+        public bool IsLoaded => NativeFunction.Natives.HAS_STREAMED_TEXTURE_DICT_LOADED(Dictionary);
+#endif
+
         /// <summary>
         /// Requests the texture dictionary for this class.
         /// </summary>
@@ -63,10 +72,15 @@ namespace LemonUI.Elements
             {
                 API.RequestStreamedTextureDict(Dictionary, true);
             }
-#else
+#elif SHVDN2 || SHVDN3
             if (!Function.Call<bool>(Hash.HAS_STREAMED_TEXTURE_DICT_LOADED, Dictionary))
             {
                 Function.Call(Hash.REQUEST_STREAMED_TEXTURE_DICT, Dictionary, true);
+            }
+#elif RAGE
+            if (!IsLoaded)
+            {
+                NativeFunction.Natives.REQUEST_STREAMED_TEXTURE_DICT(Dictionary, true);
             }
 #endif
         }
@@ -87,8 +101,10 @@ namespace LemonUI.Elements
             Request();
 #if FIVEM
             API.DrawSprite(Dictionary, Texture, relativePosition.X, relativePosition.Y, relativeSize.Width, relativeSize.Height, Heading, Color.R, Color.G, Color.B, Color.A);
-#else
+#elif SHVDN2 || SHVDN3
             Function.Call(Hash.DRAW_SPRITE, Dictionary, Texture, relativePosition.X, relativePosition.Y, relativeSize.Width, relativeSize.Height, Heading, Color.R, Color.G, Color.B, Color.A);
+#elif RAGE
+            NativeFunction.Natives.DRAW_SPRITE(Dictionary, Texture, relativePosition.X, relativePosition.Y, relativeSize.Width, relativeSize.Height, Heading, Color.R, Color.G, Color.B, Color.A);
 #endif
         }
         /// <summary>

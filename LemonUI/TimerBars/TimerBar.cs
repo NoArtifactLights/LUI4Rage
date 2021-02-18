@@ -2,6 +2,8 @@
 using CitizenFX.Core.UI;
 #elif SHVDN3
 using GTA.UI;
+#elif RAGE
+using LemonUI.Rage;
 #endif
 using LemonUI.Elements;
 using System.Drawing;

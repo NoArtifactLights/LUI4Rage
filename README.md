@@ -1,4 +1,18 @@
-# LemonUI<br>[![AppVeyor][appveyor-img]][appveyor-url] [![NuGet][nuget-img-2]][nuget-url-2] [![NuGet][nuget-img-3]][nuget-url-3] [![NuGet][nuget-img-f]][nuget-url-f] [![Discord][discord-img]][discord-url]
+# LUI4Rage
+
+LUI4Rage is a project that ports LemonUI to the RAGE Plugin Hook framework, while keeping the original features. It also introduces several classes and types missing in the RAGE Plugin Hook, in order to implement these features, such as `Scaleform`, `Alignment`, such.
+
+## Supported Platforms
+
+* Citizen Framework (GTA V) - *originally supported*
+* Community Script Hook V .NET, API v2 & v3 - *originally supported*
+* RAGE Plugin Hook - *implemented by us* - built on 1.84/1.85
+
+## License
+
+This project is licensed under [Apache 2.0](LICENSE) license.
+
+## Original Summary
 
 LemonUI is a framework for creating UI systems in Grand Theft Auto V that is compatible with SHVDN2, SHVDN3 and FiveM. It allows you to create UI Elements with a NativeUI-like style, or you can also create your own UI System from scratch via the resolution-independant classes for Text, Rectangles and Textures.
 
@@ -12,35 +26,25 @@ Special thanks to:
 * Dot. for the snippet of code used for the item scrolling
 * deterministic_bubble for answering some questions about some missing C# classes in FiveM
 
-## Download
-
-* [GitHub](https://github.com/justalemon/LemonUI/releases)
-* [5mods](https://www.gta5-mods.com/scripts/lemonui)
-* [AppVeyor](https://ci.appveyor.com/project/justalemon/lemonui) (experimental)
-
 ## Installation
 
 ### SHVDN 2 and SHVDN 3
 
 Copy all of the files from the **SHVDN2** and/or **SHVDN3** folders inside of the compressed file to your **scripts**.
 
+*Do not keep it in the game folder. It will conflict with the RAGE Plugin Hook version. Placing it into `scripts` folder allows RPH Plugins to find their version of the library.*
+
 ### FiveM
 
 No need to install. The resources using LemonUI will contain the required files.
 
+### RAGE Plugin Hook
+
+Copy all of the files from the **RAGE** folder inside the compressed file to your game folder. RPH tends to load plugin dependencies right under game folder.
+
+*Remember: LUI4Rage is not a plugin, and interactions between RPH plugins is way more difficulty than SHVDN (e.g. PlayerCompanion API would be inaccessible under RPH environment as they are in different AppDomain)*
+
 ## Usage
 
-Once installed, the mods that require LemonUI will start working.
+Once installed, the mods that require LemonUI will start working. Refer to the original repository for more information on API.
 
-If you are a developer, check the [wiki](https://github.com/justalemon/LemonUI/wiki) for information to implement LemonUI in your mod.
-
-[appveyor-img]: https://img.shields.io/appveyor/build/justalemon/lemonui?label=appveyor
-[appveyor-url]: https://ci.appveyor.com/project/justalemon/lemonui
-[nuget-img-2]: https://img.shields.io/nuget/v/LemonUI.SHVDN2?label=nuget%20%28shvdn%202%29
-[nuget-url-2]: https://www.nuget.org/packages/LemonUI.SHVDN2/
-[nuget-img-3]: https://img.shields.io/nuget/v/LemonUI.SHVDN3?label=nuget%20%28shvdn%203%29
-[nuget-url-3]: https://www.nuget.org/packages/LemonUI.SHVDN3/
-[nuget-img-f]: https://img.shields.io/nuget/v/LemonUI.FiveM?label=nuget%20%28fivem%29
-[nuget-url-f]: https://www.nuget.org/packages/LemonUI.FiveM/
-[discord-img]: https://img.shields.io/badge/discord-join-7289DA.svg
-[discord-url]: https://discord.gg/Cf6sspj

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;RAGE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LemonUI.Rage\LemonUI.Rage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RagePluginHook">
+      <HintPath>D:\SDK\RagePluginHookSDK.dll</HintPath>
+    </Reference>
+    <Compile Include="../$(SolutionName).Example/**" />
+  </ItemGroup>
+
+</Project>

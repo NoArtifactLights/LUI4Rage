@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LemonUI.Example.SHVDN2", "L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LemonUI.Example.SHVDN3", "LemonUI.Example.SHVDN3\LemonUI.Example.SHVDN3.csproj", "{8B7B93BE-1B47-41DE-810E-55EBBF55BDD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonUI.Rage", "LemonUI.Rage\LemonUI.Rage.csproj", "{7687DC28-17AE-4BDE-A484-9848D3CC2B92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LemonUI.Rage", "LemonUI.Rage\LemonUI.Rage.csproj", "{7687DC28-17AE-4BDE-A484-9848D3CC2B92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonUI.Example.Rage", "LemonUI.Example.Rage\LemonUI.Example.Rage.csproj", "{1AD5337C-C22B-4141-9838-4768BDB0BE3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{7687DC28-17AE-4BDE-A484-9848D3CC2B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7687DC28-17AE-4BDE-A484-9848D3CC2B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7687DC28-17AE-4BDE-A484-9848D3CC2B92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD5337C-C22B-4141-9838-4768BDB0BE3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD5337C-C22B-4141-9838-4768BDB0BE3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD5337C-C22B-4141-9838-4768BDB0BE3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD5337C-C22B-4141-9838-4768BDB0BE3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

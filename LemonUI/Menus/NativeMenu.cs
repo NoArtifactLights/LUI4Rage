@@ -901,6 +901,8 @@ namespace LemonUI.Menus
 			Function.Call(Hash._0xFC695459D4D0E219, pos.X, pos.Y);
 #elif SHVDN3
 			Function.Call(Hash._SET_CURSOR_LOCATION, pos.X, pos.Y);
+#elif RAGE
+			NativeFunction.Natives.xFC695459D4D0E219(pos.X, pos.Y);
 #endif
 		}
 		/// <summary>
@@ -1579,13 +1581,6 @@ namespace LemonUI.Menus
 #if RAGE
 namespace LemonUI.Rage
 {
-	public enum Alignment
-	{
-		Center = 0,
-		Left = 1,
-		Right = 2,
-	}
-
 	/// <summary>
 	/// An enumeration of fonts the game supports.
 	/// </summary>

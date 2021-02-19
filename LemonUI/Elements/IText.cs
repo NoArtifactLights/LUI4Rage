@@ -7,7 +7,6 @@ using Font = GTA.Font;
 using Alignment = GTA.UI.Alignment;
 using Font = GTA.UI.Font;
 #elif RAGE
-using Alignment = LemonUI.Rage.Alignment;
 using Font = LemonUI.Rage.Font;
 #endif
 using System.Drawing;

@@ -1,4 +1,4 @@
-#if SHVDN2
+#if SHVDN2 || RAGE
 namespace LemonUI
 {
     /// <summary>

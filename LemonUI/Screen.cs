@@ -10,6 +10,7 @@ using Rage.Native;
 #endif
 using LemonUI.Extensions;
 using System.Drawing;
+using System.Security;
 
 namespace LemonUI
 {
@@ -165,7 +166,7 @@ namespace LemonUI
             realX = argX.GetResult<float>();
             realY = argY.GetResult<float>();
 #elif RAGE
-            NativeFunction.Natives.x6DD8F5AA635EB4B2(relativeX, relativeY, out realX, out realY);
+            NativeFunction.Natives.x6DD8F5AA635EB4B2(relativeX, relativeY, ref realX, ref realY);
 #endif
             // And return it converted to absolute
             ToAbsolute(realX, realY, out float absoluteX, out float absoluteY);
@@ -182,6 +183,8 @@ namespace LemonUI
             Function.Call(Hash._SHOW_CURSOR_THIS_FRAME);
 #elif SHVDN3
             Function.Call(Hash._SET_MOUSE_CURSOR_ACTIVE_THIS_FRAME);
+#elif RAGE
+            NativeFunction.Natives._SET_MOUSE_CURSOR_ACTIVE_THIS_FRAME();
 #endif
         }
         /// <summary>
@@ -200,6 +203,9 @@ namespace LemonUI
 #elif SHVDN3
             Function.Call(Hash.SET_SCRIPT_GFX_ALIGN, (int)horizontal, (int)vertical);
             Function.Call(Hash.SET_SCRIPT_GFX_ALIGN_PARAMS, 0, 0, 0, 0);
+#elif RAGE
+            NativeFunction.Natives.SET_SCRIPT_GFX_ALIGN((int)horizontal, (int)vertical);
+            NativeFunction.Natives.SET_SCRIPT_GFX_ALIGN_PARAMS(0, 0, 0, 0);
 #endif
         }
         /// <summary>
@@ -213,6 +219,8 @@ namespace LemonUI
             Function.Call(Hash._0xE3A3DB414A373DAB);
 #elif SHVDN3
             Function.Call(Hash.RESET_SCRIPT_GFX_ALIGN);
+#elif RAGE
+            NativeFunction.Natives.xE3A3DB414A373DAB();
 #endif
         }
     }

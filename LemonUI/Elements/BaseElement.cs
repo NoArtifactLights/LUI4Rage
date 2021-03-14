@@ -83,7 +83,9 @@ namespace LemonUI.Elements
         {
             literalPosition = pos;
             literalSize = size;
+#pragma warning disable S1699 // Constructors should only call non-overridable methods
             Recalculate();
+#pragma warning restore S1699 // Constructors should only call non-overridable methods
         }
 
         #endregion

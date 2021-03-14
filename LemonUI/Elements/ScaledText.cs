@@ -164,9 +164,9 @@ namespace LemonUI.Elements
                 Add();
                 return Function.Call<float>(Hash._END_TEXT_COMMAND_GET_WIDTH, true) * 1f.ToXAbsolute();
 #elif RAGE
-                NativeFunction.Natives._BEGIN_TEXT_COMMAND_GET_WIDTH("CELL_EMAIL_BCON");
+                NativeFunction.Natives.x54CE8AC98E120CAB("CELL_EMAIL_BCON");
                 Add();
-                return NativeFunction.Natives._END_TEXT_COMMAND_GET_WIDTH<float>(true) * 1f.ToXAbsolute();
+                return NativeFunction.Natives.x85F061DA64ED2F67<float>(true) * 1f.ToXAbsolute();
 #endif
             }
         }
@@ -185,7 +185,7 @@ namespace LemonUI.Elements
 #elif SHVDN3
                 Function.Call(Hash._BEGIN_TEXT_COMMAND_LINE_COUNT, "CELL_EMAIL_BCON");
 #elif RAGE
-                NativeFunction.Natives._BEGIN_TEXT_COMMAND_LINE_COUNT("CELL_EMAIL_BCON");
+                NativeFunction.Natives.x521FB041D93DD0E4("CELL_EMAIL_BCON");
 #endif
                 // Add the information of this text
                 Add();
@@ -197,7 +197,7 @@ namespace LemonUI.Elements
 #elif SHVDN3
                 return Function.Call<int>(Hash._END_TEXT_COMMAND_LINE_COUNT, relativePosition.X, relativePosition.Y);
 #elif RAGE
-                return NativeFunction.Natives._END_TEXT_COMMAND_LINE_COUNT<int>(relativePosition.X, relativePosition.Y);
+                return NativeFunction.Natives.x9040DFB09BE75706<int>(relativePosition.X, relativePosition.Y);
 #endif
             }
         }
@@ -216,7 +216,7 @@ namespace LemonUI.Elements
 #elif SHVDN3
                 return 1080 * Function.Call<float>(Hash._GET_TEXT_SCALE_HEIGHT, Scale, (int)Font);
 #elif RAGE
-                return 1080 * NativeFunction.Natives._GET_TEXT_SCALE_HEIGHT<float>(Scale, (int)Font);
+                return 1080 * NativeFunction.Natives.xDB88A37483346780<float>(Scale, (int)Font);
 #endif
             }
         }

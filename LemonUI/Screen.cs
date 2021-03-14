@@ -59,7 +59,7 @@ namespace LemonUI
 #elif SHVDN3
                 return Function.Call<float>(Hash._GET_ASPECT_RATIO, false);
 #elif RAGE
-                return NativeFunction.Natives._GET_ASPECT_RATIO<float>(false);
+                return NativeFunction.Natives.xF1307EF624A80D87<float>(false);
 #endif
             }
         }

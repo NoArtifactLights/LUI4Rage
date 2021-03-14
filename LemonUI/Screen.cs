@@ -184,7 +184,7 @@ namespace LemonUI
 #elif SHVDN3
             Function.Call(Hash._SET_MOUSE_CURSOR_ACTIVE_THIS_FRAME);
 #elif RAGE
-            NativeFunction.Natives._SET_MOUSE_CURSOR_ACTIVE_THIS_FRAME();
+            NativeFunction.Natives.xAAE7CE1D63167423();
 #endif
         }
         /// <summary>

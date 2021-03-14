@@ -31,7 +31,7 @@ namespace LemonUI
 #elif SHVDN3
 				return !Function.Call<bool>(Hash._IS_INPUT_DISABLED, 2);
 #elif RAGE
-				return !NativeFunction.Natives._IS_INPUT_DISABLED<bool>(2);
+				return !NativeFunction.Natives.xA571D46727E2B718<bool>(2);
 #endif
 			}
 		}

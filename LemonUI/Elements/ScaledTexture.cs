@@ -59,7 +59,7 @@ namespace LemonUI.Elements
 #if RAGE
         public void Load() => Request();
 
-        public bool IsLoaded => NativeFunction.Natives.HAS_STREAMED_TEXTURE_DICT_LOADED(Dictionary);
+        public bool IsLoaded => NativeFunction.Natives.HAS_STREAMED_TEXTURE_DICT_LOADED<bool>(Dictionary);
 #endif
 
         /// <summary>

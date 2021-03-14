@@ -79,7 +79,7 @@ namespace LemonUI.Scaleform
 #elif SHVDN2 || SHVDN3
             Function.Call(Hash.DRAW_SCALEFORM_MOVIE_FULLSCREEN, scaleform.Handle, 255, 255, 255, 255, 0);
 #elif RAGE
-            NativeFunction.Natives.DRAW_SCALEFORM_MOVIE_FULLSCREEN(scaleform.Handle, 255, 255, 255, 255, 0);
+            NativeFunction.Natives.x0DF606929C105BE1(scaleform.Handle, 255, 255, 255, 255, 0);
 #endif
         }
         /// <summary>
@@ -105,7 +105,7 @@ namespace LemonUI.Scaleform
 #elif SHVDN2 || SHVDN3
             Function.Call(Hash.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED, new OutputArgument(id));
 #elif RAGE
-            NativeFunction.Natives.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED(ref id);
+            NativeFunction.Natives.x1D132D614DD86811(ref id);
 #endif
         }
 

@@ -164,16 +164,24 @@ namespace LemonUI.Menus
 			GameControl.CursorY,
 			GameControl.MoveUpDown,
 			GameControl.MoveLeftRight,
-			// Movement
+			// Camera
+            GameControl.LookBehind,
+			GameControl.VehicleLookBehind,
+            // Player
 			GameControl.Sprint,
 			GameControl.Jump,
 			GameControl.Enter,
+			GameControl.SpecialAbility,
+			GameControl.SpecialAbilityPC,
+			GameControl.SpecialAbilitySecondary,
+			GameControl.VehicleSpecialAbilityFranklin,
 			// Driving
 			GameControl.VehicleExit,
 			GameControl.VehicleAccelerate,
 			GameControl.VehicleBrake,
 			GameControl.VehicleMoveLeftRight,
 			GameControl.VehicleHandbrake,
+			GameControl.VehicleHorn,
 			// Bikes
 			GameControl.VehiclePushbikePedal,
 			GameControl.VehiclePushbikeSprint,
@@ -193,6 +201,12 @@ namespace LemonUI.Menus
 
 			GameControl.ScriptedFlyLeftRight,
 			GameControl.ScriptedFlyUpDown,
+			 // Rockstar Editor
+            GameControl.SaveReplayClip,
+			GameControl.ReplayStartStopRecording,
+			GameControl.ReplayStartStopRecordingSecondary,
+			GameControl.ReplayRecord,
+			GameControl.ReplaySave,
 		};
 #else
 		/// <summary>
@@ -216,16 +230,24 @@ namespace LemonUI.Menus
 			Control.CursorY,
 			Control.MoveUpDown,
 			Control.MoveLeftRight,
-			// Movement
+			// Camera
+            Control.LookBehind,
+            Control.VehicleLookBehind,
+            // Player
 			Control.Sprint,
 			Control.Jump,
 			Control.Enter,
+			Control.SpecialAbility,
+            Control.SpecialAbilityPC,
+            Control.SpecialAbilitySecondary,
+            Control.VehicleSpecialAbilityFranklin,
 			// Driving
 			Control.VehicleExit,
 			Control.VehicleAccelerate,
 			Control.VehicleBrake,
 			Control.VehicleMoveLeftRight,
 			Control.VehicleHandbrake,
+			Control.VehicleHorn,
 			// Bikes
 			Control.VehiclePushbikePedal,
 			Control.VehiclePushbikeSprint,
@@ -245,6 +267,12 @@ namespace LemonUI.Menus
 
 			Control.FlyLeftRight,
 			Control.FlyUpDown,
+			// Rockstar Editor
+            Control.SaveReplayClip,
+            Control.ReplayStartStopRecording,
+            Control.ReplayStartStopRecordingSecondary,
+            Control.ReplayRecord,
+            Control.ReplaySave,
 		};
 #endif
 #if RAGE

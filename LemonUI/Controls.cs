@@ -7,6 +7,7 @@ using GTA.Native;
 #elif RAGE
 using Rage;
 using Rage.Native;
+using System;
 #endif
 using System.Collections.Generic;
 
@@ -115,6 +116,30 @@ namespace LemonUI
 			{
 				EnableThisFrame(control);
 			}
+		}
+
+		/// <summary>
+		/// Disables a control during the next frame.
+		/// </summary>
+		/// <param name="control">The control to disable.</param>
+#if RAGE
+		[Obsolete("Use Rage.Game.DisableControlAction instead.")]
+#endif
+		public static void DisableThisFrame(
+#if RAGE
+			GameControl control
+#else
+			Control control
+#endif
+			)
+		{
+#if FIVEM
+			API.DisableControlAction(0, (int)control, true);
+#elif RAGE
+			Game.DisableControlAction(0, control, true); // Rage has this API
+#else
+			Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, (int)control, true);
+#endif
 		}
 	}
 }

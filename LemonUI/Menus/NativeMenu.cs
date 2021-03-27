@@ -910,8 +910,6 @@ namespace LemonUI.Menus
 			Function.Call(Hash._0xFC695459D4D0E219, pos.X, pos.Y);
 #elif SHVDN3
 			Function.Call(Hash._SET_CURSOR_LOCATION, pos.X, pos.Y);
-#elif RAGE
-			NativeFunction.Natives.xFC695459D4D0E219(pos.X, pos.Y);
 #endif
 		}
 		/// <summary>
@@ -979,7 +977,7 @@ namespace LemonUI.Menus
 		/// </summary>
 		private void ProcessControls()
 		{
-			if (DisableControls)
+			if (DisableControls) // If the user wants to disable the controls, do so and only enable those required
 			{
 				Controls.DisableAll(2);
 				Controls.EnableThisFrame(controlsRequired);

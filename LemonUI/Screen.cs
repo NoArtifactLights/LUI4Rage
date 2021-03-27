@@ -91,6 +91,7 @@ namespace LemonUI
         {
             // Get the real width based on the aspect ratio
             float width = 1080f * AspectRatio;
+
             // And save the correct values
             relativeX = absoluteX / width;
             relativeY = absoluteY / 1080f;

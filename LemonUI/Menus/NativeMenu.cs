@@ -883,16 +883,22 @@ namespace LemonUI.Menus
 			const float extraY = 325;
 
 			// Get the correct desired position of the cursor as relative
+#pragma warning disable S1854 // Unused assignments should be removed
 			PointF pos = PointF.Empty;
+#pragma warning restore S1854 // Unused assignments should be removed
 			if (SafeZoneAware)
 			{
 				Screen.SetElementAlignment(Alignment == Alignment.Right ? GFXAlignment.Right : GFXAlignment.Left, GFXAlignment.Top);
+#pragma warning disable S1854 // Unused assignments should be removed
 				pos = Screen.GetRealPosition(Offset.X + (Alignment == Alignment.Right ? -Width - extraX : Width + extraX), Offset.Y + extraY).ToRelative();
+#pragma warning restore S1854 // Unused assignments should be removed
 				Screen.ResetElementAlignment();
 			}
 			else
 			{
+#pragma warning disable S1854 // Unused assignments should be removed
 				pos = new PointF(Alignment == Alignment.Right ? 1f.ToXAbsolute() - Offset.X - Width - extraX : Offset.X + Width + extraX, Offset.Y + extraY).ToRelative();
+#pragma warning restore S1854 // Unused assignments should be removed
 			}
 			// And set the position of the cursor
 #if FIVEM
@@ -1164,7 +1170,7 @@ namespace LemonUI.Menus
 			// If the player selected an item, activate it
 			if (selectPressed)
 			{
-				if (SelectedItem != null && SelectedItem.Enabled)
+				if (SelectedItem?.Enabled == true)
 				{
 					SelectedItem.OnActivated(this);
 					SoundActivated?.PlayFrontend();
@@ -1172,12 +1178,10 @@ namespace LemonUI.Menus
 					{
 						check.UpdateTexture(true);
 					}
-					return;
 				}
 				else
 				{
 					SoundDisabled?.PlayFrontend();
-					return;
 				}
 			}
 		}
@@ -1456,7 +1460,6 @@ namespace LemonUI.Menus
 				subtitleText.Position = new PointF(pos.X + 6, pos.Y + 4.2f);
 			}
 			// Finally, increase the size based on the subtitle height
-			// currentY += subtitleHeight;
 
 			// Set the size of the selection rectangle
 			selectedRect.Size = new SizeF(width, itemHeight);

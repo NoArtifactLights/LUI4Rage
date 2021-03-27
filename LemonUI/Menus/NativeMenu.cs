@@ -315,9 +315,18 @@ namespace LemonUI.Menus
 		/// </summary>
 		internal const float itemOffsetY = 3;
 
-#endregion
+		#endregion
 
-#region Private Fields
+		#region Private Fields
+
+		/// <summary>
+		/// A list of GTA V Controls.
+		/// </summary>
+#if RAGE
+		private static readonly GameControl[] controls = (GameControl[])Enum.GetValues(typeof(GameControl));
+#else
+		private static readonly Control[] controls = (Control[])Enum.GetValues(typeof(Control));
+#endif
 
 		/// <summary>
 		/// If the menu has just been opened.
@@ -979,15 +988,29 @@ namespace LemonUI.Menus
 		{
 			if (DisableControls) // If the user wants to disable the controls, do so and only enable those required
 			{
-				Controls.DisableAll(2);
-				Controls.EnableThisFrame(controlsRequired);
-				if (Controls.IsUsingController)
+				foreach (var control in controls)
 				{
-					Controls.EnableThisFrame(controlsGamepad);
-				}
-				if (Controls.IsUsingController || !UseMouse)
-				{
-					Controls.EnableThisFrame(controlsCamera);
+					// If the control is required by the menu
+					if (controlsRequired.Contains(control))
+					{
+						continue;
+					}
+					// If the player is using a controller and is required on game-pads
+					if (Controls.IsUsingController && controlsGamepad.Contains(control))
+					{
+						continue;
+					}
+					// If the player is using a controller or mouse usage is disabled and is a camera control
+					if ((Controls.IsUsingController || !UseMouse) && controlsCamera.Contains(control))
+					{
+						continue;
+					}
+
+#if RAGE
+					Game.DisableControlAction(0, control, true);
+#else
+					Controls.DisableThisFrame(control);
+#endif
 				}
 			}
 

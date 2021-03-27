@@ -650,7 +650,7 @@ namespace LemonUI.Menus
 		/// </summary>
 		public bool ResetCursorWhenOpened { get; set; } = true;
 		/// <summary>
-		/// The maximum allowed number of items in the menu at once.
+		/// Gets or sets the maximum allowed number of items in the menu at once.
 		/// </summary>
 		public int MaxItems
 		{
@@ -667,7 +667,7 @@ namespace LemonUI.Menus
 			}
 		}
 		/// <summary>
-		/// If this menu should be aware of the Safe Zone when doing calculations.
+		/// Gets or sets a value indicating whether this menu should be aware of the Safe Zone when doing calculations.
 		/// </summary>
 		public bool SafeZoneAware
 		{
@@ -679,11 +679,11 @@ namespace LemonUI.Menus
 			}
 		}
 		/// <summary>
-		/// If the count of items should be shown on the right of the subtitle.
+		/// Gets or sets the visibility status for the count of the items.
 		/// </summary>
 		public CountVisibility ItemCount { get; set; }
 		/// <summary>
-		/// The instructional buttons shown in the bottom right.
+		/// Gets or sets the instructional buttons shown in the bottom right.
 		/// </summary>
 		public InstructionalButtons Buttons { get; } = new InstructionalButtons(new InstructionalButton("Select",
 #if RAGE
@@ -702,22 +702,40 @@ namespace LemonUI.Menus
 			Visible = true
 		};
 		/// <summary>
-		/// The parent menu of this menu.
+		/// Gets or sets the parent menu of this menu.
 		/// </summary>
 		public NativeMenu Parent { get; set; } = null;
 		/// <summary>
-		/// If the menu accepts user input for navigation.
+		/// Gets or sets a value indicating whether the menu should accept the user input for navigation.
 		/// </summary>
 		public bool AcceptsInput { get; set; } = true;
 
+		/// <summary>
+		/// Gets or sets a value indicating whether to disable some controls when the menu is open.
+		/// </summary>
 		public bool DisableControls { get; set; } = true;
 
 		/// <summary>
-		/// The <see cref="Sound"/> played when the menu is opened.
+		/// Gets a list of all controls that are required for some menu operations.
+		/// </summary>
+		/// <remarks>
+		/// Add controls to this list when you want to detect them as pressed while the menu is open.
+		/// </remarks>
+		public
+#if RAGE
+			List<GameControl>
+			RequiredControls { get; } = new List<GameControl>();
+#else
+			List<Control> 
+			RequiredControls { get; } = new List<Control>();
+#endif
+
+		/// <summary>
+		/// Gets or sets the <see cref="Sound"/> played when the menu is opened.
 		/// </summary>
 		public Sound SoundOpened { get; set; } = DefaultActivatedSound;
 		/// <summary>
-		/// The <see cref="Sound"/> played when a <see cref="NativeItem"/> is activated.
+		/// Gets or sets the <see cref="Sound"/> played when a <see cref="NativeItem"/> is activated.
 		/// </summary>
 		public Sound SoundActivated { get; set; } = DefaultActivatedSound;
 		/// <summary>
@@ -995,6 +1013,7 @@ namespace LemonUI.Menus
 					{
 						continue;
 					}
+
 					// If the player is using a controller and is required on game-pads
 					if (Controls.IsUsingController && controlsGamepad.Contains(control))
 					{
@@ -1002,6 +1021,12 @@ namespace LemonUI.Menus
 					}
 					// If the player is using a controller or mouse usage is disabled and is a camera control
 					if ((Controls.IsUsingController || !UseMouse) && controlsCamera.Contains(control))
+					{
+						continue;
+					}
+
+					// If the control is required by the mod developer
+					if (RequiredControls.Contains(control))
 					{
 						continue;
 					}

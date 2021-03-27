@@ -37,8 +37,15 @@ namespace LemonUI.Menus
 	/// Represents the method that is called when a new item is selected in the Menu.
 	/// </summary>
 	/// <param name="sender">The source of the event.</param>
-	/// <param name="e">A <see cref="SelectedEventArgs"/> with the index informationn.</param>
+	/// <param name="e">A <see cref="SelectedEventArgs"/> with the index information.</param>
 	public delegate void SelectedEventHandler(object sender, SelectedEventArgs e);
+
+	/// <summary>
+	/// Represents the method that is called when an item is activated on a menu.
+	/// </summary>
+	/// <param name="sender">The source of the event.</param>
+	/// <param name="e">An <see cref="ItemActivatedArgs"/> with the item information.</param>
+	public delegate void ItemActivatedEventHandler(object sender, ItemActivatedArgs e);
 
 	/// <summary>
 	/// Represents the selection of an item in the screen.
@@ -46,16 +53,16 @@ namespace LemonUI.Menus
 	public class SelectedEventArgs
 	{
 		/// <summary>
-		/// The index of the item in the full list of items.
+		/// Gets the index of the item in the full list of items.
 		/// </summary>
 		public int Index { get; }
 		/// <summary>
-		/// The index of the item in the screen.
+		/// Gets the index of the item in the screen.
 		/// </summary>
 		public int OnScreen { get; }
 
 		/// <summary>
-		/// Creates a new <see cref="SelectedEventArgs"/>.
+		/// Initializes a new instance of the <see cref="SelectedEventArgs"/> class.
 		/// </summary>
 		/// <param name="index">The index of the item in the menu.</param>
 		/// <param name="screen">The index of the item based on the number of items shown on screen,</param>
@@ -63,6 +70,22 @@ namespace LemonUI.Menus
 		{
 			Index = index;
 			OnScreen = screen;
+		}
+	}
+
+	/// <summary>
+	/// Represents the arguments of an item activation.
+	/// </summary>
+	public class ItemActivatedArgs
+	{
+		/// <summary>
+		/// Gets the item that was just activated.
+		/// </summary>
+		public NativeItem Item { get; }
+
+		internal ItemActivatedArgs(NativeItem item)
+		{
+			Item = item;
 		}
 	}
 
@@ -144,9 +167,9 @@ namespace LemonUI.Menus
 
 #if RAGE
 		/// <summary>
-		/// The controls required by the menu with both a gamepad and mouse + keyboard.
+		/// The controls required by the menu with both a game-pad and mouse + keyboard.
 		/// </summary>
-		internal static List<GameControl> controlsRequired = new List<GameControl>
+		internal static readonly List<GameControl> controlsRequired = new List<GameControl>
 		{
 			// Menu Controls
 			GameControl.FrontendAccept,
@@ -165,9 +188,9 @@ namespace LemonUI.Menus
 			GameControl.MoveUpDown,
 			GameControl.MoveLeftRight,
 			// Camera
-            GameControl.LookBehind,
+			GameControl.LookBehind,
 			GameControl.VehicleLookBehind,
-            // Player
+			// Player
 			GameControl.Sprint,
 			GameControl.Jump,
 			GameControl.Enter,
@@ -201,8 +224,8 @@ namespace LemonUI.Menus
 
 			GameControl.ScriptedFlyLeftRight,
 			GameControl.ScriptedFlyUpDown,
-			 // Rockstar Editor
-            GameControl.SaveReplayClip,
+			// Rockstar Editor
+			GameControl.SaveReplayClip,
 			GameControl.ReplayStartStopRecording,
 			GameControl.ReplayStartStopRecordingSecondary,
 			GameControl.ReplayRecord,
@@ -231,16 +254,16 @@ namespace LemonUI.Menus
 			Control.MoveUpDown,
 			Control.MoveLeftRight,
 			// Camera
-            Control.LookBehind,
-            Control.VehicleLookBehind,
-            // Player
+			Control.LookBehind,
+			Control.VehicleLookBehind,
+			// Player
 			Control.Sprint,
 			Control.Jump,
 			Control.Enter,
 			Control.SpecialAbility,
-            Control.SpecialAbilityPC,
-            Control.SpecialAbilitySecondary,
-            Control.VehicleSpecialAbilityFranklin,
+			Control.SpecialAbilityPC,
+			Control.SpecialAbilitySecondary,
+			Control.VehicleSpecialAbilityFranklin,
 			// Driving
 			Control.VehicleExit,
 			Control.VehicleAccelerate,
@@ -268,11 +291,11 @@ namespace LemonUI.Menus
 			Control.FlyLeftRight,
 			Control.FlyUpDown,
 			// Rockstar Editor
-            Control.SaveReplayClip,
-            Control.ReplayStartStopRecording,
-            Control.ReplayStartStopRecordingSecondary,
-            Control.ReplayRecord,
-            Control.ReplaySave,
+			Control.SaveReplayClip,
+			Control.ReplayStartStopRecording,
+			Control.ReplayStartStopRecordingSecondary,
+			Control.ReplayRecord,
+			Control.ReplaySave,
 		};
 #endif
 #if RAGE
@@ -783,34 +806,39 @@ namespace LemonUI.Menus
 		/// </summary>
 		public Sound SoundDisabled { get; set; } = DefaultDisabledSound;
 
-#endregion
+		#endregion
 
-#region Events
+		#region Events
 
 		/// <summary>
-		/// Event triggered when the menu is being opened.
+		/// Occurs when the menu is being opened.
 		/// </summary>
 		public event CancelEventHandler Opening;
 		/// <summary>
-		/// Event triggered when the menu is opened and shown to the user.
+		/// Occurs when the menu is opened and shown to the user.
 		/// </summary>
 		public event EventHandler Shown;
 		/// <summary>
-		/// Event triggered when the menu starts closing.
+		/// Occurs when the menu starts closing.
 		/// </summary>
 		public event CancelEventHandler Closing;
 		/// <summary>
-		/// Event triggered when the menu finishes closing.
+		/// Occurs when the menu finishes closing.
 		/// </summary>
 		public event EventHandler Closed;
 		/// <summary>
-		/// Event triggered when the index has been changed.
+		/// Occurs when the index has been changed.
 		/// </summary>
 		public event SelectedEventHandler SelectedIndexChanged;
 
-#endregion
+		/// <summary>
+		/// Occurs when an item in the menu is activated.
+		/// </summary>
+		public event ItemActivatedEventHandler ItemActivated;
 
-#region Constructor
+		#endregion
+
+		#region Constructor
 
 		/// <summary>
 		/// Creates a new menu with the specified title.
@@ -1181,6 +1209,7 @@ namespace LemonUI.Menus
 							{
 								if (item.Enabled)
 								{
+									ItemActivated?.Invoke(this, new ItemActivatedArgs(selectedItem));
 									item.OnActivated(this);
 									SoundActivated?.PlayFrontend();
 									if (item is NativeCheckboxItem checkboxItem)

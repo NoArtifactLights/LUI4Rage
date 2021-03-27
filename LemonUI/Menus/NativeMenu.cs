@@ -700,6 +700,9 @@ namespace LemonUI.Menus
 		/// If the menu accepts user input for navigation.
 		/// </summary>
 		public bool AcceptsInput { get; set; } = true;
+
+		public bool DisableControls { get; set; } = true;
+
 		/// <summary>
 		/// The <see cref="Sound"/> played when the menu is opened.
 		/// </summary>
@@ -976,17 +979,18 @@ namespace LemonUI.Menus
 		/// </summary>
 		private void ProcessControls()
 		{
-			// Start by disabling all of the controls
-			Controls.DisableAll(2);
-			// And enable only those required at all times and specific situations
-			Controls.EnableThisFrame(controlsRequired);
-			if (Controls.IsUsingController)
+			if (DisableControls)
 			{
-				Controls.EnableThisFrame(controlsGamepad);
-			}
-			if (Controls.IsUsingController || !UseMouse)
-			{
-				Controls.EnableThisFrame(controlsCamera);
+				Controls.DisableAll(2);
+				Controls.EnableThisFrame(controlsRequired);
+				if (Controls.IsUsingController)
+				{
+					Controls.EnableThisFrame(controlsGamepad);
+				}
+				if (Controls.IsUsingController || !UseMouse)
+				{
+					Controls.EnableThisFrame(controlsCamera);
+				}
 			}
 
 			// If the controls are disabled or the menu has just been opened, return

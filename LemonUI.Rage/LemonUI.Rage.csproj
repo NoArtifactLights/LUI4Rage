@@ -2,10 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
+    <Version>1.1.0</Version>
+    <Authors>NAL Project</Authors>
+    <Company>NAL Project</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Description>LemonUI port to RAGE Plugin Hook (unofficial)</Description>
+    <PackageReleaseNotes>- Fixes Alignment
+- Followup to upsource</PackageReleaseNotes>
+    <PackageId>LUI4Rage</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;RAGE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RAGE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
